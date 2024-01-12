@@ -104,8 +104,10 @@ func NewPostgresStore(ctx context.Context) (*dbStore, error) {
 	db_user := os.Getenv("db_user")
 	db_pass := os.Getenv("db_pass")
 	db_name := os.Getenv("db_name")
+	db_host := os.Getenv("db_host")
 
-	connStr := "postgres://"+db_user+":"+db_pass+"@localhost/"+db_name+"?sslmode=disable"
+	connStr := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", db_host, db_user, db_pass, db_name)
+	
 
 	pool, err := pgxpool.New(ctx, connStr);
 	if err != nil {

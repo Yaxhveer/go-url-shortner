@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  db:
+  postgres:
     image: postgres
     environment:
       POSTGRES_USER: ${db_user}
@@ -9,6 +9,9 @@ services:
       POSTGRES_DB: ${db_name}
     ports:
       - "5432:5432"
+    networks:
+      - backend
+    restart: always
 
 
   app:
@@ -16,16 +19,22 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: url_shortener
+    environment:
+      PORT: ${PORT}
+      db_user: ${db_user}
+      db_name: ${db_name}
+      db_pass: ${db_pass}
+      db_host: postgres
     ports:
-      - "8000:8000"
+      - ${PORT}:${PORT}
     networks:
-      - backend_network
+      - backend
     depends_on:
-      - db
+      - postgres
     restart: always
 
 networks:
-  backend_network:
+  backend:
     driver: bridge
 
 volumes:
