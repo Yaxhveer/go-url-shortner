@@ -22,4 +22,4 @@ go.work
 
 .env
 
-go-url-shortner
+bin/go-url-shortner
