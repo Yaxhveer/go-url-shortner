@@ -1,0 +1,18 @@
+name: Run test-cases
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  my_job:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Keploy Report
+      uses: keploy/testgpt@main
+      with:
+        working-directory: /
+        delay: 10
+        command: docker compose up
+        keploy-path: ./

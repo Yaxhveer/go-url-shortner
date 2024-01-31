@@ -1,0 +1,66 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-2
+spec:
+    metadata: {}
+    req:
+        method: GET
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:8000/nMgHbxLa
+        header:
+            Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+            Accept-Encoding: gzip, deflate, br
+            Accept-Language: en-US,en;q=0.9
+            Connection: keep-alive
+            Host: localhost:8000
+            Sec-Ch-Ua: '"Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"'
+            Sec-Ch-Ua-Mobile: ?0
+            Sec-Ch-Ua-Platform: '"Windows"'
+            Sec-Fetch-Dest: document
+            Sec-Fetch-Mode: navigate
+            Sec-Fetch-Site: none
+            Sec-Fetch-User: ?1
+            Upgrade-Insecure-Requests: "1"
+            User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36
+        body: ""
+        body_type: ""
+        timestamp: 2024-01-30T20:00:21.071985485Z
+        host: ""
+    resp:
+        status_code: 303
+        header:
+            Content-Length: "69"
+            Content-Type: text/html; charset=utf-8
+            Date: Tue, 30 Jan 2024 20:00:21 GMT
+            Location: https://github.com/antrea-io/antrea/issues
+        body: |+
+            <a href="https://github.com/antrea-io/antrea/issues">See Other</a>.
+
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-01-30T20:00:23.095068077Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1706644823
+curl: |
+    curl --request GET \
+      --url http://localhost:8000/nMgHbxLa \
+      --header 'Accept-Language: en-US,en;q=0.9' \
+      --header 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36' \
+      --header 'Host: localhost:8000' \
+      --header 'Connection: keep-alive' \
+      --header 'Sec-Fetch-Mode: navigate' \
+      --header 'Sec-Fetch-User: ?1' \
+      --header 'Sec-Ch-Ua-Mobile: ?0' \
+      --header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \
+      --header 'Sec-Ch-Ua: "Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"' \
+      --header 'Upgrade-Insecure-Requests: 1' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Sec-Ch-Ua-Platform: "Windows"' \
+      --header 'Sec-Fetch-Site: none' \
+      --header 'Sec-Fetch-Dest: document' \

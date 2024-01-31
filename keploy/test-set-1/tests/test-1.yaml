@@ -1,0 +1,55 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-1
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:8000/api/shorten
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Cache-Control: no-cache
+            Connection: keep-alive
+            Content-Length: "42"
+            Content-Type: text/plain; charset=utf-8
+            Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTk0NTQ5ZGFlODY4NzZjNTIzMzI3ZGQiLCJpYXQiOjE3MDQyMjAwMzIsImV4cCI6MTcwNjgxMjAzMn0.0q2PUXn423PU-fl1VjG-MUwNknK0-lxUM1zmAbeqF_8; token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTk0NTgyMjg5MDU3NmFlNTk5YjZjYWMiLCJpYXQiOjE3MDQyMjQwNjIsImV4cCI6MTcwNjgxNjA2Mn0.W9aeAKCfN2yJWb9m18n1QjdMZumHubvqocPJJDlmnkc
+            Host: localhost:8000
+            Postman-Token: cefdc99f-93e8-433f-a588-6e7172088e98
+            User-Agent: PostmanRuntime/7.36.1
+        body: https://github.com/antrea-io/antrea/issues
+        body_type: ""
+        timestamp: 2024-01-30T19:59:54.43232453Z
+        host: ""
+    resp:
+        status_code: 200
+        header:
+            Content-Length: "8"
+            Content-Type: text/plain; charset=utf-8
+            Date: Tue, 30 Jan 2024 19:59:54 GMT
+        body: nMgHbxLa
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-01-30T19:59:56.508214722Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1706644796
+curl: |-
+    curl --request POST \
+      --url http://localhost:8000/api/shorten \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Content-Type: text/plain; charset=utf-8' \
+      --header 'User-Agent: PostmanRuntime/7.36.1' \
+      --header 'Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTk0NTQ5ZGFlODY4NzZjNTIzMzI3ZGQiLCJpYXQiOjE3MDQyMjAwMzIsImV4cCI6MTcwNjgxMjAzMn0.0q2PUXn423PU-fl1VjG-MUwNknK0-lxUM1zmAbeqF_8; token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTk0NTgyMjg5MDU3NmFlNTk5YjZjYWMiLCJpYXQiOjE3MDQyMjQwNjIsImV4cCI6MTcwNjgxNjA2Mn0.W9aeAKCfN2yJWb9m18n1QjdMZumHubvqocPJJDlmnkc' \
+      --header 'Cache-Control: no-cache' \
+      --header 'Host: localhost:8000' \
+      --header 'Postman-Token: cefdc99f-93e8-433f-a588-6e7172088e98' \
+      --header 'Connection: keep-alive' \
+      --header 'Accept: */*' \
+      --data 'https://github.com/antrea-io/antrea/issues'
