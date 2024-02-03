@@ -1,18 +1,23 @@
-name: Run test-cases
+name: keploy
 on:
   push:
     branches:
       - main
+    
+  pull_request:
+    types: [opened, reopened, synchronize]
 
 jobs:
-  my_job:
+  e2e-test:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout
+        uses: actions/checkout@v2
     - name: Keploy Report
       uses: keploy/testgpt@main
       with:
-        working-directory: /
+        working-directory: ./
         delay: 10
         command: docker compose up
         keploy-path: ./
