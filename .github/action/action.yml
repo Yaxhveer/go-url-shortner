@@ -1,0 +1,67 @@
+name: 'Keploy TestRun Report'
+description: "A action to run e2e test run"
+author: Alphasians
+branding:
+  icon: 'activity'
+  color: 'orange'
+
+inputs:
+  working-directory:
+    description: Relative path under $GITHUB_WORKSPACE where the repository was checked out
+    required: true
+  command:
+    description: Command to run the application
+    required: true
+  keploy-path:
+    description: Path to keploy
+    required: true
+    default: ./
+  delay:
+    description: Time to start application
+    required: true
+    default: 10
+
+runs:
+  using: "composite"
+  steps:
+  - name: Setup GITHUB_PATH for script
+    run: |
+      echo "${{ github.action_path }}" >> $GITHUB_PATH
+      echo "${{ inputs.working-directory }}"
+    shell: bash
+  - name: Grant permissions
+    run: chmod +x ${GITHUB_ACTION_PATH}/install.sh
+    shell: sh
+  - id: keploy-test-report
+    name: Run Script
+    run:  |
+      ${GITHUB_ACTION_PATH}/install.sh
+      ${GITHUB_ACTION_PATH}/install.sh > ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
+      cat ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
+      grep "TESTRUN SUMMARY. For testrun with id: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt | sed -r "s/\x1B\[[0-9;]*[mGK]//g" > ${GITHUB_WORKSPACE}/${WORKDIR}/final.out
+      grep "Total tests: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt | sed -r "s/\x1B\[[0-9;]*[mGK]//g" >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.out
+      grep "Total test passed: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt | sed -r "s/\x1B\[[0-9;]*[mGK]//g" >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.out
+      grep "Total test failed: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt | sed -r "s/\x1B\[[0-9;]*[mGK]//g" >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.out
+      echo 'KEPLOY_REPORT<<EOF' > $GITHUB_OUTPUT
+      cat ${GITHUB_WORKSPACE}/${WORKDIR}/final.out >> $GITHUB_OUTPUT
+      echo 'EOF' >> $GITHUB_OUTPUT
+      cat $GITHUB_OUTPUT
+    shell: bash
+    env:
+      WORKDIR: ${{ inputs.working-directory }}
+      DELAY: ${{ inputs.delay }}
+      COMMAND : ${{ inputs.command }}
+      KEPLOY_PATH: ${{inputs.keploy-path}}
+  - name: Comment on PR
+    uses: actions/github-script@v6
+    env:
+      KEPLOY_REPORT: ${{ steps.keploytestreport.outputs.KEPLOY_REPORT }}
+    with:
+      github-token: ${{ github.token }}
+      script: |
+        github.rest.issues.createComment({
+          issue_number: context.issue.number,
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+          body: process.env.KEPLOY_REPORT
+        })

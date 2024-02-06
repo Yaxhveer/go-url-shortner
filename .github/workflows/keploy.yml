@@ -15,7 +15,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Keploy Report
-      uses: keploy/testgpt@main
+      uses: ./.github/action
       with:
         working-directory: ./
         delay: 10
